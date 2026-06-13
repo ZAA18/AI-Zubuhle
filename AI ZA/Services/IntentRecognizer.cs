@@ -13,18 +13,7 @@ namespace AI_ZA.Services
         {
             string input = message.ToLower();
 
-            if (input.Contains("hello") || input.Contains("hi") || input.Contains("hey"))
-            {
-                return IntentType.Greeting;
-            }
-
-            if (input.StartsWith("what") || input.StartsWith("who") ||
-                input.StartsWith("where") || input.StartsWith("when") ||
-                input.StartsWith("why") || input.StartsWith("how"))
-
-                { return IntentType.Question; }
-            
-            if  (input.Contains("My name is"))
+            if (input.Contains("my name is"))
             {
                 return IntentType.StoreMemory;
             }
@@ -33,6 +22,24 @@ namespace AI_ZA.Services
             {
                 return IntentType.RecallMemory;
             }
+
+            if (input.Contains("hello") ||
+                input.Contains("hi") ||
+                input.Contains("hey"))
+            {
+                return IntentType.Greeting;
+            }
+
+            if (input.StartsWith("what") ||
+                input.StartsWith("who") ||
+                input.StartsWith("where") ||
+                input.StartsWith("when") ||
+                input.StartsWith("why") ||
+                input.StartsWith("how"))
+            {
+                return IntentType.Question;
+            }
+
             return IntentType.Unknown;
         }
     }
