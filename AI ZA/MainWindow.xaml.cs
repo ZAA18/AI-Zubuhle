@@ -21,5 +21,61 @@ namespace AI_ZA
         {
             InitializeComponent();
         }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            string userMessage = UserInput.Text.Trim();
+
+            if (string.IsNullOrEmpty(userMessage))
+                return;
+
+            AddUserMessage(userMessage);
+
+            UserInput.Clear();
+
+            AddBotMessage("I received: " + userMessage);
+        }
+
+        private void AddUserMessage(string message)
+        {
+            Border bubble = new Border
+            {
+                Background = Brushes.DodgerBlue,
+                CornerRadius = new CornerRadius(15),
+                Padding = new Thickness(10),
+                Margin = new Thickness(0, 5, 0, 5),
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+
+            bubble.Child = new TextBlock
+            {
+                Text = message,
+                Foreground = Brushes.White,
+                TextWrapping = TextWrapping.Wrap
+            };
+
+            MessagesPanel.Children.Add(bubble);
+        }
+
+        private void AddBotMessage(string message)
+        {
+            Border bubble = new Border
+            {
+                Background = Brushes.Gray,
+                CornerRadius = new CornerRadius(15),
+                Padding = new Thickness(10),
+                Margin = new Thickness(0, 5, 0, 5),
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+
+            bubble.Child = new TextBlock
+            {
+                Text = message,
+                Foreground = Brushes.White,
+                TextWrapping = TextWrapping.Wrap
+            };
+
+            MessagesPanel.Children.Add(bubble);
+        }
     }
 }
