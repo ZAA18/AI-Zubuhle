@@ -8,6 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AI_ZA.Services;
+using AI_ZA.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AI_ZA
 {
@@ -17,9 +20,15 @@ namespace AI_ZA
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ConversationManager conversationManager;
+        private readonly IntentRecognizer intentRecognizer;
+        private readonly MemoryManager memoryManager;
         public MainWindow()
         {
             InitializeComponent();
+            conversationManager = new ConversationManager();
+            intentRecognizer = new IntentRecognizer();
+            memoryManager = new MemoryManager();
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
@@ -29,11 +38,61 @@ namespace AI_ZA
             if (string.IsNullOrEmpty(userMessage))
                 return;
 
+            conversationManager.AddMessage("User", userMessage);
+
+            IntentType intent = intentRecognizer.DetectIntent(userMessage);
+
             AddUserMessage(userMessage);
 
             UserInput.Clear();
 
-            AddBotMessage("I received: " + userMessage);
+            //string botResponse = "I received: " + userMessage;
+
+            // string botResponse = $"Detected Intent: {intent}";
+            string botResponse;
+
+            switch (intent)
+            {
+                case IntentType.Greeting:
+                    botResponse = "Hello! How can I help you today?";
+                    break;
+
+                case IntentType.StoreMemory:
+
+                    string name = userMessage
+                        .Replace("My name is", "")
+                        .Replace("my name is", "")
+                        .Trim();
+
+                    memoryManager.Remember("Name", name);
+
+                    botResponse = $"Nice to meet you, {name}. I'll remember that.";
+                    break;
+
+                case IntentType.RecallMemory:
+
+                    string storedName = memoryManager.Recall("Name");
+
+                    if (storedName != null)
+                        botResponse = $"Your name is {storedName}.";
+                    else
+                        botResponse = "I don't know your name yet.";
+                    break;
+
+                case IntentType.Question:
+                    botResponse = "I detected a question. Knowledge system coming soon.";
+                    break;
+
+                default:
+                    botResponse = "I'm not sure what you mean yet.";
+                    break;
+            }
+
+            conversationManager.AddMessage("ZA", botResponse);
+
+            AddBotMessage(botResponse);
+
+         
         }
 
         private void AddUserMessage(string message)
@@ -77,5 +136,7 @@ namespace AI_ZA
 
             MessagesPanel.Children.Add(bubble);
         }
+
+        
     }
 }
