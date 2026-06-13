@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AI_ZA"
         mc:Ignorable="d"
-        Title="ZaAI" Height="455" Width="800">
+        Title="ZaAI" Height="456" Width="800">
     <Grid>
         <TextBlock Text="Welcome to Za's AI I am still testing my repo"/>
     </Grid>
