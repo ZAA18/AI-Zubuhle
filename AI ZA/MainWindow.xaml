@@ -1,0 +1,12 @@
+﻿<Window x:Class="AI_ZA.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AI_ZA"
+        mc:Ignorable="d"
+        Title="ZaAI" Height="455" Width="800">
+    <Grid>
+        <TextBlock Text="Welcome to Za's AI I am still testing my repo"/>
+    </Grid>
+</Window>
