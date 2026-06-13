@@ -1,0 +1,13 @@
+hello,Greeting
+hi,Greeting
+hey,Greeting
+good morning,Greeting
+
+what is unity,Question
+how does ai work,Question
+who created c#,Question
+
+my name is john,StoreMemory
+my favourite game is cyberpunk,StoreMemory
+
+what is my name,RecallMemory

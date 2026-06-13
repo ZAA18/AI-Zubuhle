@@ -23,17 +23,27 @@ namespace AI_ZA
         private readonly ConversationManager conversationManager;
         private readonly IntentRecognizer intentRecognizer;
         private readonly MemoryManager memoryManager;
+        private readonly FactExtractor factExtractor;
+        private readonly MLIntentClassifier mlIntentClassifier;
         public MainWindow()
         {
             InitializeComponent();
             conversationManager = new ConversationManager();
             intentRecognizer = new IntentRecognizer();
             memoryManager = new MemoryManager();
+            factExtractor = new FactExtractor();
+
+            mlIntentClassifier = new MLIntentClassifier();
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             string userMessage = UserInput.Text.Trim();
+
+            string prediction =
+            mlIntentClassifier.PredictIntent(userMessage);
+
+            MessageBox.Show($"ML Predicted: {prediction}");
 
             if (string.IsNullOrEmpty(userMessage))
                 return;
@@ -59,14 +69,20 @@ namespace AI_ZA
 
                 case IntentType.StoreMemory:
 
-                    string name = userMessage
-                        .Replace("My name is", "")
-                        .Replace("my name is", "")
-                        .Trim();
+                    if (factExtractor.TryExtractFact(userMessage,
+                                    out string key,
+                                    out string value))
+                    {
+                        memoryManager.Remember(key, value);
 
-                    memoryManager.Remember("Name", name);
-
-                    botResponse = $"Nice to meet you, {name}. I'll remember that.";
+                        botResponse =
+                            $"I've learned that your {key} is {value}.";
+                    }
+                    else
+                    {
+                        botResponse =
+                            "I couldn't determine what information to store.";
+                    }
                     break;
 
                 case IntentType.RecallMemory:
