@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AI_ZA"
         mc:Ignorable="d"
-        Title="ZaAI" Height="450" Width="800">
-    <Grid>
-        <TextBlock Text="Welcome to Za's AI I am still testing my repo"/>
+        Title="ZaAI" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#1E1E1E">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--sidebar-->
+        
+        
+
+
     </Grid>
 </Window>
